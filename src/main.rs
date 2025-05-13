@@ -23,7 +23,7 @@ fn main() {
         .unwrap();
 
     // Processing 
-    if let Some(path) = path {
+    if let Some(mut path) = path {
         let path_str = path.to_str().unwrap();
 
         println!("Parsing demo...");
@@ -36,7 +36,9 @@ fn main() {
 
         println!("Writing to file...");
 
-        let mut file = std::fs::File::create(path_str.to_string() + ".json").unwrap();
+        // Convert the input path to the output path (ie change from dem to json)
+        path.set_extension("json");
+        let mut file = std::fs::File::create(path).unwrap();
         file.write_all(json_string.as_bytes()).unwrap();
 
         println!("Writing complete");
